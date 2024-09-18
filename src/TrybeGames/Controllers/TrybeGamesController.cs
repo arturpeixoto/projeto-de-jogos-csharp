@@ -178,7 +178,7 @@ public class TrybeGamesController
             Name = gameName,
             ReleaseDate = releaseDate,
             GameType = selectedGameType,
-            Id = database.Games.Count + 1 // Calculando o próximo ID
+            Id = database.Games.Count + 1
         };
 
         database.Games.Add(newGame);
