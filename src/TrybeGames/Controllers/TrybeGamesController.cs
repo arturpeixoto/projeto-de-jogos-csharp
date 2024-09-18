@@ -134,7 +134,7 @@ public class TrybeGamesController
     // 2. Crie a funcionalidade de adicionar um novo estúdio de jogos ao banco de dados
     public void AddGameStudio()
     {
-        Console.WriteLine("Você deseja criar um novo estúdio. Qual o seu nome?");
+        Console.WriteLine("Você deseja criar um novo estúdio. Qual o nome?");
         string gameStudio = Console.ReadLine();
         var newGameStudio = new GameStudio()
         {
@@ -149,8 +149,41 @@ public class TrybeGamesController
     // 3. Crie a funcionalidade de adicionar novo Jogo ao Banco de dados
     public void AddGame()
     {
-        // implementar
-        Console.WriteLine("Ainda não é possível realizar essa funcionalidade!");
+        Console.WriteLine("Você deseja criar um novo estúdio. Qual o nome?");
+        string gameName = Console.ReadLine();
+
+        Console.WriteLine("Qual a data de lançamento do jogo? (formato: dd/MM/yyyy)");
+        DateTime releaseDate;
+        while (!DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, DateTimeStyles.None, out releaseDate))
+        {
+            Console.WriteLine("Data inválida. Por favor, insira a data no formato correto (dd/MM/yyyy).");
+        }
+
+        Console.WriteLine("Selecione o gênero do jogo:");
+        foreach (var gameType in Enum.GetValues(typeof(GameType)))
+        {
+            Console.WriteLine($"{(int)gameType} - {gameType}");
+        }
+
+        GameType selectedGameType;
+        int gameTypeInput;
+        while (!int.TryParse(Console.ReadLine(), out gameTypeInput) || !Enum.IsDefined(typeof(GameType), gameTypeInput))
+        {
+            Console.WriteLine("Gênero inválido. Por favor, selecione um valor válido.");
+        }
+        selectedGameType = (GameType)Convert.ToInt32(gameTypeInput);
+
+        var newGame = new Game()
+        {
+            Name = gameName,
+            ReleaseDate = releaseDate,
+            GameType = selectedGameType,
+            Id = database.Games.Count + 1 // Calculando o próximo ID
+        };
+
+        database.Games.Add(newGame);
+
+        Console.WriteLine($"O jogo {newGame.Name} foi corretamente adicionado!");
     }
 
     public void ChangeGameStudio(Game game)
