@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace TrybeGames;
 
 public class TrybeGamesDatabase
@@ -62,8 +64,21 @@ public class TrybeGamesDatabase
     // 9. Crie a funcionalidade de buscar todos os estúdios de jogos junto dos seus jogos desenvolvidos com suas pessoas jogadoras
     public List<StudioGamesPlayers> GetStudiosWithGamesAndPlayers()
     {
-        // Implementar
-        throw new NotImplementedException();
-    }
+        var studioGamesPlayersList = (from studio in GameStudios
+                                        let studioGames = Games.Where(game => game.DeveloperStudio == studio.Id).ToList()
+                                        select new StudioGamesPlayers
+                                        {
+                                            GameStudioName = studio.Name,
+                                            Games = (from game in studioGames
+                                                    select new GamePlayer
+                                                    {
+                                                        GameName = game.Name,
+                                                        Players = (from player in Players
+                                                                    where game.Players.Contains(player.Id)
+                                                                    select player).ToList()
+                                                    }).ToList()
+                                        }).ToList();
 
+        return studioGamesPlayersList;
+    }
 }
