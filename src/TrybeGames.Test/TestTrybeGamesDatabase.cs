@@ -16,9 +16,9 @@ public class TestTrybeGamesDatabase
     {
         // Arrange
         var player = databaseEntry.Players.Find(p => p.Id == playerIdEntry);
-
+        player.Should().NotBeNull("O jogador deve existir no banco de dados para o teste");
         // Act
-        var result = databaseEntry.GetGamesPlayedBy(player);
+        var result = databaseEntry.GetGamesPlayedBy(player!);
 
         // Assert
         result.Should().BeEquivalentTo(expected);
