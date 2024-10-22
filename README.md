@@ -23,7 +23,7 @@ O arquivo `Program.cs` cria uma base de dados em memória e apresenta um menu no
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/projeto-de-jogos-csharp.git
+git clone https://github.com/arturpeixoto/projeto-de-jogos-csharp.git
 ```
 
 ### 2. Acesse o diretório do projeto
